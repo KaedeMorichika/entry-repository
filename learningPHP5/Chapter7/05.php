@@ -18,6 +18,7 @@ session_start();
 $dsn = 'mysql:dbname=db0415;host=localhost';
 $user = 'root';
 
+// ページ遷移設定
 if (!empty($_SESSION['username'])) {
     print 'ウェルカム'.$_SESSION['username'];
 } else {
@@ -32,6 +33,7 @@ if (!empty($_SESSION['username'])) {
     }
 }
 
+// フォーム表示関数
 function show_form($errors = '') {
     print '<form method="POST" action="'.$_SERVER['PHP_SELF'].'">';
     
@@ -54,6 +56,7 @@ function show_form($errors = '') {
     print '</form>';
 }
 
+// 提出された値をチェックする関数
 function validate_form() {
     global $db, $dsn, $user;
     try {
@@ -77,6 +80,7 @@ function validate_form() {
     return $errors;
 }
 
+// 提出された値が適切な時の処理関数
 function process_form() {
     $_SESSION['username'] = $_POST['username'];
     print "ようこそ $_SESSION[username]";
