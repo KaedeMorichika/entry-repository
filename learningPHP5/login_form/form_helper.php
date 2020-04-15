@@ -19,15 +19,19 @@ function input_submit($element_name, $label) {
 // テキストボックス
 function input_textarea($element_name, $values) {
     print '<textarea name="'.$element_name.'">';
-    print htmlentities($values[$element_name]);
+    if (array_key_exists($element_name, $values)) {
+        print htmlentities($values[$element_name]);
+    }
     print '</textarea>';
 }
 
 // ラジオボタン or チェックボックス
 function input_radiocheck($type, $element_name, $values, $element_value) {
     print '<input type="'.$type.'" name="'.$element_name.'" value="'.$element_value.'" ';
-    if ($values[$element_name] == $element_value) {
-        print 'checked="checked"';
+    if (array_key_exists($element_name, $values)) {
+        if ($values[$element_name] == $element_value) {
+            print 'checked="checked"';
+        }
     }
     print '/>';
 }
@@ -43,12 +47,14 @@ function input_select($element_name, $selected, $options, $multiple = false) {
     
     // 選択されるもののリストを設定
    $selected_options = array();
-   if ($multiple) {
-       foreach ($selected[$element_name] as $val) {
-           $selected_options[$val] = true;
-       }
-   } else {
-       $selected_options[$selected[$element_name]] = true;
+   if (array_key_exists($element_name, $selected)) {
+        if ($multiple) {
+            foreach ($selected[$element_name] as $val) {
+                $selected_options[$val] = true;
+            }
+        } else {
+            $selected_options[$selected[$element_name]] = true;
+        }
    }
    
    // <option>タグを出力
