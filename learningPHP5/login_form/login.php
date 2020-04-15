@@ -1,6 +1,6 @@
 <?php 
 // フォームヘルパー関数のインポート
-require '04.php';
+require 'form_helper.php';
 
 // パスワード
 function input_password($field_name, $values) {
