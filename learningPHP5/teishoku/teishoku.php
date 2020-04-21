@@ -102,28 +102,28 @@ function validate_form() {
     $errors = array();
     foreach ($menu as $item) {
         if (!empty($_POST[$item['name']])) {
-            if (!$errors and empty($_POST[$item['name'].'個数'])) {
+            if (!$errors and empty($_POST[ $item['name'].'個数'] )) {
                 $errors[] = '正しい個数を入力してください。';
             }
-            elseif (!$errors and $_POST[$item['name'].'個数'] != strval(intval($_POST[$item['name'].'個数']))) {
+            elseif (!$errors and $_POST[ $item['name'].'個数' ] != strval(intval($_POST[ $item['name'].'個数' ]))) {
                 $errors[] = '正しい個数を入力してください。';
             }
         } else {
-            if (!empty($_POST[$item['name'].'個数'])) {
+            if (!empty($_POST[ $item['name'].'個数' ])) {
                 $errors[] = '正しい個数を入力してください。';
             }
         }
     }
     foreach ($sauce as $item) {
         if (!empty($_POST[$item])) {
-            if (!$errors and empty($_POST[$item.'個数'])) {
+            if (!$errors and empty($_POST[ $item.'個数' ])) {
                 $errors[] = '正しい個数を入力してください。';
             }
-            elseif (!$errors and $_POST[$item.'個数'] != strval(intval($_POST[$item.'個数']))) {
+            elseif (!$errors and $_POST[ $item.'個数' ] != strval(intval($_POST[ $item.'個数' ]))) {
                 $errors[] = '正しい個数を入力してください。';
             }
         } else {
-            if (!empty($_POST[$item.'個数'])) {
+            if (!empty($_POST[ $item.'個数' ])) {
                 $errors[] = '正しい個数を入力してください。';
             }
         }
@@ -143,15 +143,15 @@ function process_form() {
     print '<table border="1"><tr><th>メニュー</th><th>個数</th><th>値段</th></tr>';
     foreach ($menu as $item) {
         if (!empty($_POST[$item['name']])) {
-            print '<tr><td>' . $item['name'] . '</td><td>' . $_POST[$item['name'].'個数'] . '</td><td>\\' . $_POST[$item['name'].'個数'] * $item['price'];
-            $total_price += $_POST[$item['name'].'個数'] * $item['price'];
+            print '<tr><td>' . $item['name'] . '</td><td>' . $_POST[ $item['name'].'個数' ] . '</td><td>\\' . $_POST[ $item['name'].'個数' ] * $item['price'];
+            $total_price += $_POST[ $item['name'].'個数' ] * $item['price'];
             print '</td></tr>';
         }
     }
     foreach ($sauce as $item) {
         if (!empty($_POST[$item])) {
-            print '<tr><td>' . $item . 'ソース</td><td>' . $_POST[$item.'個数'] . '</td><td>\\' . $_POST[$item.'個数'] * 100;
-            $total_price += $_POST[$item.'個数'] * 100;
+            print '<tr><td>' . $item . 'ソース</td><td>' . $_POST[ $item.'個数' ] . '</td><td>\\' . $_POST[ $item.'個数' ] * 100;
+            $total_price += $_POST[ $item.'個数' ] * 100;
             print '</td></tr>';
         }
     }
