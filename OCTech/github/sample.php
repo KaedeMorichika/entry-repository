@@ -2,7 +2,7 @@
 // MySQL接続のための定数設定
 $dsn = 'mysql:dbname=dbhoge;host=localhost';
 $user = 'root';
-$psw = 'hogehoge';
+$psw = 'psw2';
 
 // DB接続
 try {
