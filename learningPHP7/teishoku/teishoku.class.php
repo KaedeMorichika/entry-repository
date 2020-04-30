@@ -137,6 +137,5 @@ class Teishokuya {
     public function add_dish($dish) {
         $this->menu[] = $dish;
     }
-    
 }
 ?>

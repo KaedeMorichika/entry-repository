@@ -21,21 +21,21 @@ try {
 }
 
 // ページ遷移設定
-/*
+
 if (!empty($_SESSION['is_checked'])) {
     print '会計済みです。';
 } else {
-*/
+
     $teishoku->show_menu();
     $teishoku->show_sauce();
     if (!empty($_POST['_submit_check'])) {
         if ($form_errors = $teishoku->validate_form()) {
-            $teishoku->show_form($_POST['PHP_SELF'], $form_errors);
+            $teishoku->show_form($_SERVER['PHP_SELF'], $form_errors);
         } else {
             $teishoku->process_form();
         }
     } else {
-        $teishoku->show_form($_POST['PHP_SELF']);
+        $teishoku->show_form($_SERVER['PHP_SELF']);
     }
-//}
+}
 ?>
