@@ -1,24 +1,12 @@
 <?php
 // フォームヘルパー関数のインポート
-require 'teishoku.class.php';
+require_once 'teishoku.class.php';
 
 // セッションの開始
 session_start();
-
-// DBの処理
-$dsn = 'mysql:dbname=teishoku;host=localhost';
-$user = 'root';
-try {
-    $db = new PDO($dsn, $user);
-    $sql1 = 'SELECT name, price FROM menu';
-    $sql2 = 'SELECT name FROM sauce';
-    $menu = $db->query($sql1, PDO::FETCH_CLASS, 'Dish')->fetchAll();
-    $sauce = $db->query($sql2)->fetchAll(PDO::FETCH_COLUMN);
-    $teishoku = new Teishokuya($menu, $sauce);
-} catch (PDOException $e) {
-    print 'DB Connection failed:'.$e->getMessage();
-    die;
-}
+$menu = Dish::getMenu();
+$sauce = Dish::getSauce();
+$teishoku = new Teishokuya($menu, $sauce);
 
 // ページ遷移設定
 

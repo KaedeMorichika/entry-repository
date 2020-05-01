@@ -2,8 +2,7 @@
 require 'form_helper.php';
 
 class Dish {
-    public $name;
-    public  $price;
+    public $name, $price;
     
     public function return_name () {
         return $this->name;
@@ -11,6 +10,34 @@ class Dish {
     
     public function return_price () {
         return $this->price;
+    }
+    
+    public function getMenu () {
+        $dsn = 'mysql:dbname=teishoku;host=localhost';
+        $user = 'root';
+        try {
+            $db = new PDO($dsn, $user);
+            $sql = 'SELECT name, price FROM menu';
+            $menu = $db->query($sql, PDO::FETCH_CLASS, 'Dish')->fetchAll();
+            return $menu;
+        } catch (PDOException $e) {
+            print 'DB Connection failed:'.$e->getMessage();
+            die;
+        }
+    }
+    
+    public function getSauce () {
+        $dsn = 'mysql:dbname=teishoku;host=localhost';
+        $user = 'root';
+        try {
+            $db = new PDO($dsn, $user);
+            $sql = 'SELECT name FROM sauce';
+            $sauce = $db->query($sql)->fetchAll(PDO::FETCH_COLUMN);
+            return $sauce;
+        } catch (PDOException $e) {
+            print 'DB Connection failed:'.$e->getMessage();
+            die;
+        }
     }
 }
 
