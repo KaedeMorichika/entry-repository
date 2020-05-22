@@ -101,13 +101,17 @@ class Teishoku {
     public function validateTeishokuForm($post_data) {
         
         $errors = [];
+        $no_order = true;
         
         foreach ($post_data as $key => $value) {
             if (strpos($key, '_id')) {
-                continue;
+                $no_order = false;
+                break;
             }
-            $errors[] = '注文がありません。';
-            break;
+        }
+        
+        if ($no_order) {
+            $errors = '注文がありません。';
         }
         
         if (count($errors) === 0) {

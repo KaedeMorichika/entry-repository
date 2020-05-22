@@ -14,11 +14,13 @@ if (count($errors) > 0) {
     
     foreach ($errors as $error) {
         print '<li>'.$error.'</li>';
-        print '<input type="hidden" name="errors" value[]="'.$error.'"';
     }
     
     print '<ul>';
     
+    foreach ($errors as $error) {
+        print '<input type="hidden" name="errors[]" value="'.$error.'"';
+    }
     print '<input type="submit" value="戻る">';
     print '</form>';
     
