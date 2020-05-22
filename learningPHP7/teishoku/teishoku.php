@@ -1,29 +1,17 @@
 <?php
-// フォームヘルパー関数のインポート
+
 require_once 'teishoku.class.php';
 
-// セッションの開始
-session_start();
-$menu = Dish::getMenu();
-$sauce = Dish::getSauce();
-$teishoku = new Teishokuya($menu, $sauce);
+$teishoku = new Teishoku();
 
-// ページ遷移設定
+echo '<pre>';
+var_dump($_POST);
+echo '</pre>';
 
-if (!empty($_SESSION['is_checked'])) {
-    print '会計済みです。';
+$teishoku->show_menu();
+if (!empty($_POST['errors'])) {
+    $teishoku->show_form('redirect.php', $_POST['errors']);
 } else {
-
-    $teishoku->show_menu();
-    $teishoku->show_sauce();
-    if (!empty($_POST['_submit_check'])) {
-        if ($form_errors = $teishoku->validate_form()) {
-            $teishoku->show_form($_SERVER['PHP_SELF'], $form_errors);
-        } else {
-            $teishoku->process_form();
-        }
-    } else {
-        $teishoku->show_form($_SERVER['PHP_SELF']);
-    }
+    $teishoku->show_form('redirect.php');
 }
 ?>

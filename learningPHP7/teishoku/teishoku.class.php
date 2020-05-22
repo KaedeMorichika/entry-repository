@@ -1,168 +1,275 @@
-<?php 
-require 'form_helper.php';
+<?php
+require_once 'form_helper.php';
 
-class Dish {
-    public $name, $price;
+class Teishoku {
+    private $dishes;
+    private $sauces;
     
-    public function return_name () {
-        return $this->name;
-    }
-    
-    public function return_price () {
-        return $this->price;
-    }
-    
-    public function getMenu () {
-        $dsn = 'mysql:dbname=teishoku;host=localhost';
+    public function __construct() {
+        
+        $dbname = 'teishoku';
         $user = 'root';
-        try {
-            $db = new PDO($dsn, $user);
-            $sql = 'SELECT name, price FROM menu';
-            $menu = $db->query($sql, PDO::FETCH_CLASS, 'Dish')->fetchAll();
-            return $menu;
-        } catch (PDOException $e) {
-            print 'DB Connection failed:'.$e->getMessage();
-            die;
-        }
+        $this->dishes = Dish::getAllDishes($dbname, $user);
+        $this->sauces = Sauce::getAllSauces($dbname, $user);
+        
     }
     
-    public function getSauce () {
-        $dsn = 'mysql:dbname=teishoku;host=localhost';
-        $user = 'root';
-        try {
-            $db = new PDO($dsn, $user);
-            $sql = 'SELECT name FROM sauce';
-            $sauce = $db->query($sql)->fetchAll(PDO::FETCH_COLUMN);
-            return $sauce;
-        } catch (PDOException $e) {
-            print 'DB Connection failed:'.$e->getMessage();
-            die;
-        }
-    }
-}
-
-class Teishokuya {
-    public $menu, $sauce;
-    
-    public function __construct ($menu, $sauce) {
-        $this->menu = $menu;
-        $this->sauce = $sauce;
+    public function getDishes() {
+        
+        return $this->dishes;
+        
     }
     
-    public function show_menu () {
+    public function getSauces() {
+        
+        return $this->sauces;
+        
+    }
+    
+    public function show_menu() {
+        
         print '<table border="1"><tr><th>メニュー</th><th>値段</th></tr>';
-        foreach ($this->menu as $item) {
-            print '<tr><td>'.$item->name.'</td><td>'.$item->price.'</td></tr>';
+        
+        foreach ($this->dishes as $dish) {
+            print '<tr>';
+            print '<td>'.$dish->getDishName().'</td><td>'.$dish->getDishPrice().'</td>';
+            print '</tr>';
         }
+        
         print '</table>';
-    }
-    
-    public function show_sauce () {
-        print '唐揚げにはソースをつけられます。（各100円）<ul>';
-        foreach ($this->sauce as $item) {
-            print '<li>'.$item.'ソース</li>';
+        print '<p>唐揚げは、以下のソースを選べます。（各100円）</p>';
+        print '<ul>';
+        
+        foreach ($this->sauces as $sauce) {
+            print '<li>'.$sauce->getSauceName().'ソース</li>';
         }
+        
         print '</ul>';
+        
     }
     
-    public function show_form ($path, $errors = '') {
-        print '<form method="POST" action="'.$path.'">';
+    public function show_form($action, $errors = null) {
         
-        if ($errors) {
-            print '入力エラー';
-            print '<ul><li>';
-            print implode('</li><li>', $errors);
-            print '</li></ul>';
+        if (!empty($errors)) {
+            print '入力エラー：';
+            print '<ul>';
+            
+            foreach ($errors as $error) {
+                print '<li>'.$error.'</li>';
+            }
+            
+            print '</ul>';
         }
         
-        print 'ご注文のメニューにチェックを入れ、個数を入力してください。';
+        print '<form method="POST" action='.$action.'>';
         print '<table><tr><th></th><th>メニュー</th><th>個数</th></tr>';
-        foreach ($this->menu as $item) {
+        
+        foreach ($this->dishes as $dish) {
+            
+            $dish_id = $dish->getDishID();
+            $dish_name = $dish->getDishName();
+            
             print '<tr><td>';
-            input_radiocheck('radio', $item->name, $_POST, '1');
+            input_radiocheck('radio', $dish_name.'_id', $_POST, $dish_id);
             print '</td><td>';
-            print $item->name;
+            print $dish_name;
             print '</td><td>';
-            input_text($item->name.'個数', $_POST);
-            print '</td></tr>';
+            input_text($dish_name.'_num', $_POST);
+            print '</td>';
+            
         }
-        foreach ($this->sauce as $item) {
+        
+        foreach ($this->sauces as $sauce) {
+            
+            $sauce_id = $sauce->getSauceID();
+            $sauce_name = $sauce->getSauceName();
+            
             print '<tr><td>';
-            input_radiocheck('radio', $item, $_POST, '1');
+            input_radiocheck('radio', $sauce_name.'_id', $_POST, $sauce_id);
             print '</td><td>';
-            print $item.'ソース';
+            print $sauce_name.'ソース';
             print '</td><td>';
-            input_text($item.'個数', $_POST);
-            print '</td></tr>';
+            input_text($sauce_name.'_num', $_POST);
+            print '</td>';
         }
         print '</table>';
-        
-        input_submit('submit', '会計');
-        
-        print '<input type="hidden" name="_submit_check" value="1">';
+        input_submit('submit', '会計へ');
         print '</form>';
+        
     }
-    
-    public function validate_form () {
-        $errors = array();
-        foreach ($this->menu as $item) {
-            if (!empty($_POST[$item->name])) {
-                if (!$errors and empty($_POST[$item->name.'個数'] )) {
-                    $errors[] = '正しい個数を入力してください。';
-                }
-                elseif (!$errors and $_POST[ $item->name.'個数' ] != strval(intval($_POST[ $item->name.'個数' ]))) {
-                    $errors[] = '正しい個数を入力してください。';
-                }
-            } else {
-                if (!empty($_POST[ $item->name.'個数' ])) {
-                    $errors[] = '正しい個数を入力してください。';
+
+    public function validateTeishokuForm($post_data) {
+        
+        $errors = [];
+        
+        foreach ($post_data as $key => $value) {
+            if (strpos($key, '_id')) {
+                continue;
+            }
+            $errors[] = '注文がありません。';
+            break;
+        }
+        
+        if (count($errors) === 0) {
+            foreach ($this->dishes as $dish) {
+                
+                $dish_id = $dish->getDishID();
+                $dish_name = $dish->getDishName();
+                
+                if (empty($post_data[$dish_name . '_id'])) {
+                    
+                    if (! empty($post_data[$dish_name . '_num'])) {
+                        $errors[] = '選択されていないメニューの個数が入力されています。';
+                    }
+                } else {
+                    
+                    if (empty($post_data[$dish_name . '_num'])) {
+                        $errors[] = '選択されたメニューの個数が入力されていません。';
+                    } elseif ($post_data[$dish_name . '_num'] != strval(intval($post_data[$dish_name . '_num']))) {
+                        $errors[] = 'メニューの個数は半角数字で入力してください。';
+                    }
                 }
             }
-        }
-        foreach ($this->sauce as $item) {
-            if (!empty($_POST[$item])) {
-                if (!$errors and empty($_POST[ $item.'個数' ])) {
-                    $errors[] = '正しい個数を入力してください。';
+            
+            foreach ($this->sauces as $sauce) {
+                
+                $sauce_id = $sauce->getSauceID();
+                $sauce_name = $sauce->getSauceName();
+                
+                if (empty($post_data[$sauce_name . '_id'])) {
+                    
+                    if (! empty($post_data[$sauce_name . '_num'])) {
+                        $errors[] = '選択されていないメニューの個数が入力されています。';
+                    }
+                } else {
+                    
+                    if (empty($post_data[$sauce_name . '_num'])) {
+                        $errors[] = '選択されたメニューの個数が入力されていません。';
+                    } elseif ($post_data[$sauce_name . '_num'] != strval(intval($post_data[$sauce_name . '_num']))) {
+                        $errors[] = 'メニューの個数は半角数字で入力してください。';
+                    }
                 }
-                elseif (!$errors and $_POST[ $item.'個数' ] != strval(intval($_POST[ $item.'個数' ]))) {
-                    $errors[] = '正しい個数を入力してください。';
-                }
-            } else {
-                if (!empty($_POST[ $item.'個数' ])) {
-                    $errors[] = '正しい個数を入力してください。';
-                }
-            }  
+            }
         }
         return $errors;
     }
     
-    public function process_form () {
-        $total_price = 0;
-        $_SESSION['is_checked'] = true;
+    public function show_accounting($post_data) {
         
-        print '&nbsp;お会計：';
-        print '<table border="1"><tr><th>メニュー</th><th>個数</th><th>値段</th></tr>';
-        foreach ($this->menu as $item) {
-            if (!empty($_POST[$item->name])) {
-                print '<tr><td>' . $item->name . '</td><td>' . $_POST[ $item->name.'個数' ] . '</td><td>\\' . $_POST[ $item->name.'個数' ] * $item->price;
-                $total_price += $_POST[ $item->name.'個数' ] * $item->price;
-                print '</td></tr>';
+        $total_price = 0;
+        
+        print '<table border="1">';
+        
+        print '<tr><th>メニュー</th><th>個数</th><th>値段</th></tr>';
+        
+        foreach ($this->dishes as $dish) {
+            
+            if (!empty($post_data[$dish_name.'_id'])) {
+                
+                $dish_name = $dish->getDishName();
+                $dish_price = $dish->getDishPrice();
+                $dish_num = $post_data[$dish_name.'_num'];
+                $price = $dish_price * $dish_num;
+                $total_price += $price;
+                
+                print '<tr><td>'.$dish_name.'</td><td>'.$dish_num.'</td><td>'.$price.'</td></tr>';
             }
+            
         }
-        foreach ($this->sauce as $item) {
-            if (!empty($_POST[$item])) {
-                print '<tr><td>' . $item . 'ソース</td><td>' . $_POST[ $item.'個数' ] . '</td><td>\\' . $_POST[ $item.'個数' ] * 100;
-                $total_price += $_POST[ $item.'個数' ] * 100;
-                print '</td></tr>';
+        
+        foreach ($this->sauces as $sauce) {
+            
+            if (!empty($post_data[$dish_name.'_id'])) {
+                
+                $sauce_name = $sauce->getSauceName();
+                $sauce_price = $sauce->getSaucePrice();
+                $sauce_num = $post_data[$sauce_name.'_num'];
+                $price = $sauce_price * $sauce_num;
+                $total_price += $price;
+                
+                print '<tr><td>'.$sauce_name.'</td><td>'.$sauce_num.'</td><td>'.$price.'</td></tr>';
             }
+            
         }
-        print '<tr><td>合計</td><td></td><td>\\'.$total_price.'</td></tr>';
+        
+        print '<tr><td>合計金額</td><td></td><td>'.$total_price.'</td></tr>';
+        
         print '</table>';
-        print 'ありがとうございました。';
-    }
-    
-    public function add_dish($dish) {
-        $this->menu[] = $dish;
     }
 }
-?>
+
+class Dish {
+    private $id;
+    private $name;
+    private $price;
+    
+    public function getDishID() {
+        return $this->id;
+    }
+    
+    public function getDishName() {
+        return $this->name;
+    }
+    
+    public function getDishPrice() {
+        return $this->price;
+    }
+    
+    public function getAllDishes($dbname, $user, $pwd = null) {
+        try {
+            $dsn = 'mysql:dbname='.$dbname.';host=localhost';
+            if (empty($pwd)) {
+                $dbh = new PDO($dsn, $user);
+            } else {
+                $dbh = new PDO($dsn, $user, $pwd);
+            }
+            
+            $sql = 'SELECT * FROM menu';
+            $stmt = $dbh->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_CLASS, 'Dish');
+            
+        } catch (PDOException $e) {
+            print 'DB Connection failed:'.$e->getMessage();
+            die;
+        }
+    }
+}
+
+class Sauce {
+    private $id;
+    private $name;
+    private $price = 100;
+    
+    public function getSauceID() {
+        return $this->id;
+    }
+    
+    public function getSauceName() {
+        return $this->name;
+    }
+    
+    public function getSaucePrice() {
+        return $this->price;
+    }
+    
+    public function getAllSauces($dbname, $user, $pwd = null) {
+        try {
+            $dsn = 'mysql:dbname='.$dbname.';host=localhost';
+            if (empty($pwd)) {
+                $dbh = new PDO($dsn, $user);
+            } else {
+                $dbh = new PDO($dsn, $user, $pwd);
+            }
+            
+            $sql = 'SELECT * FROM sauce';
+            $stmt = $dbh->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_CLASS, 'Sauce');
+            
+        } catch (PDOException $e) {
+            print 'DB Connection failed:'.$e->getMessage();
+            die;
+        }
+    }
+}
