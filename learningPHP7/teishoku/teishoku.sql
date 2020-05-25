@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2020-04-21 10:29:40
+-- 生成日時: 2020-05-25 07:33:26
 -- サーバのバージョン： 10.4.11-MariaDB
--- PHP のバージョン: 7.4.3
+-- PHP のバージョン: 7.4.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -21,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- データベース: `teishoku`
 --
-CREATE DATABASE IF NOT EXISTS `teishoku` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `teishoku`;
 
 -- --------------------------------------------------------
 
@@ -52,7 +49,7 @@ INSERT INTO `menu` (`id`, `name`, `price`) VALUES
 --
 
 CREATE TABLE `sauce` (
-  `sauce_id` int(11) DEFAULT NULL,
+  `id` int(11) DEFAULT NULL,
   `name` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -60,7 +57,7 @@ CREATE TABLE `sauce` (
 -- テーブルのデータのダンプ `sauce`
 --
 
-INSERT INTO `sauce` (`sauce_id`, `name`) VALUES
+INSERT INTO `sauce` (`id`, `name`) VALUES
 (1, 'Chili'),
 (2, 'Pepper'),
 (3, 'Tartar');
