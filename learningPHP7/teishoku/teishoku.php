@@ -4,14 +4,18 @@ require_once 'teishoku.class.php';
 
 $teishoku = new Teishoku();
 
-echo '<pre>';
-var_dump($_POST);
-echo '</pre>';
-
 $teishoku->show_menu();
-if (!empty($_POST['errors'])) {
-    $teishoku->show_form('redirect.php', $_POST['errors']);
+
+if (! empty($_POST['_submit_check'])) {
+    
+    $form_error = $teishoku->validateTeishokuForm($_POST);
+    
+    if (!empty($form_error)) {
+        $teishoku->show_form($_SERVER['PHP_SELF'], $form_error);
+    } else {
+        $teishoku->show_accounting($_POST);
+    }
 } else {
-    $teishoku->show_form('redirect.php');
+    $teishoku->show_form($_SERVER['PHP_SELF']);
 }
 ?>

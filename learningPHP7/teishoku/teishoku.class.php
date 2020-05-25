@@ -51,15 +51,22 @@ class Teishoku {
     public function show_form($action, $errors = null) {
         
         if (!empty($errors)) {
+            
             print '入力エラー：';
             print '<ul>';
             
-            foreach ($errors as $error) {
-                print '<li>'.$error.'</li>';
+            if (is_array($errors)) {
+                foreach ($errors as $error) {
+                    print '<li>' . $error . '</li>';
+                }
+            } else {
+                print '<li>' . $errors . '</li>';
             }
             
             print '</ul>';
         }
+        
+        print '&nbsp;&nbsp;ご注文になるメニューにチェックを入れて、個数を入力してください。';
         
         print '<form method="POST" action='.$action.'>';
         print '<table><tr><th></th><th>メニュー</th><th>個数</th></tr>';
@@ -93,6 +100,7 @@ class Teishoku {
             print '</td>';
         }
         print '</table>';
+        print '<input type="hidden" name="_submit_check" value="1">';
         input_submit('submit', '会計へ');
         print '</form>';
         
@@ -114,7 +122,7 @@ class Teishoku {
             $errors = '注文がありません。';
         }
         
-        if (count($errors) === 0) {
+        if (empty($errors)) {
             foreach ($this->dishes as $dish) {
                 
                 $dish_id = $dish->getDishID();
@@ -143,24 +151,25 @@ class Teishoku {
                 if (empty($post_data[$sauce_name . '_id'])) {
                     
                     if (! empty($post_data[$sauce_name . '_num'])) {
-                        $errors[] = '選択されていないメニューの個数が入力されています。';
+                        $errors[] = 'チェックされていないメニューの個数が入力されています。';
                     }
                 } else {
                     
                     if (empty($post_data[$sauce_name . '_num'])) {
-                        $errors[] = '選択されたメニューの個数が入力されていません。';
+                        $errors[] = 'チェックされたメニューの個数が入力されていません。';
                     } elseif ($post_data[$sauce_name . '_num'] != strval(intval($post_data[$sauce_name . '_num']))) {
                         $errors[] = 'メニューの個数は半角数字で入力してください。';
                     }
                 }
             }
         }
-        return $errors;
+        return array_unique($errors);
     }
     
     public function show_accounting($post_data) {
         
         $total_price = 0;
+        
         
         print '<table border="1">';
         
@@ -168,35 +177,37 @@ class Teishoku {
         
         foreach ($this->dishes as $dish) {
             
+            $dish_name = $dish->getDishName();
+            
             if (!empty($post_data[$dish_name.'_id'])) {
                 
-                $dish_name = $dish->getDishName();
                 $dish_price = $dish->getDishPrice();
                 $dish_num = $post_data[$dish_name.'_num'];
                 $price = $dish_price * $dish_num;
                 $total_price += $price;
                 
-                print '<tr><td>'.$dish_name.'</td><td>'.$dish_num.'</td><td>'.$price.'</td></tr>';
+                print '<tr><td>'.$dish_name.'</td><td>'.$dish_num.'</td><td>'.$price.'円</td></tr>';
             }
             
         }
         
         foreach ($this->sauces as $sauce) {
             
-            if (!empty($post_data[$dish_name.'_id'])) {
+            $sauce_name = $sauce->getSauceName();
+            
+            if (!empty($post_data[$sauce_name.'_id'])) {
                 
-                $sauce_name = $sauce->getSauceName();
                 $sauce_price = $sauce->getSaucePrice();
                 $sauce_num = $post_data[$sauce_name.'_num'];
                 $price = $sauce_price * $sauce_num;
                 $total_price += $price;
                 
-                print '<tr><td>'.$sauce_name.'</td><td>'.$sauce_num.'</td><td>'.$price.'</td></tr>';
+                print '<tr><td>'.$sauce_name.' ソース</td><td>'.$sauce_num.'</td><td>'.$price.'円</td></tr>';
             }
             
         }
         
-        print '<tr><td>合計金額</td><td></td><td>'.$total_price.'</td></tr>';
+        print '<tr><td>合計金額</td><td></td><td>'.$total_price.'円</td></tr>';
         
         print '</table>';
     }
