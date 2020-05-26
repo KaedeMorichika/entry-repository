@@ -1,6 +1,6 @@
 # セールスマン巡回問題
 # 局所探索法
-# 2
+# 2-opt 法の後に 3-opt 法を適用
 
 import sys
 import matplotlib.pyplot as plt
