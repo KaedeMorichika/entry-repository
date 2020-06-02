@@ -1,15 +1,65 @@
 <?php
-require_once 'CommonFunction.php';
 require_once 'dish.class.php';
+require_once 'sauce.class.php';
 
+/*
+ * 唐揚げクラス
+ */
 class Karaage extends Dish {
     
-    public function getAllKaraages ($dbname, $user, $pwd = null) {
+    const CATEGORY = 1;
+    // ソースプロパティの追加
+    private $sauces;
+    
+    public function __construct($name, $price) {
         
-            $dbh = accessDatabase($dbname, $user, $pwd);
+        parent::__construct($name, $price);
+
+        $this->sauces = array();
+        
+        $dbname = 'teishoku';
+        $user = 'root';        
+        
+        $sauces = Sauce::get_datas();
+        
+        foreach ($sauces as $sauce) {
             
-            $sql = "SELECT * from menu WHERE category = (SELECT id FROM category WHERE name = 'Karaage')";
-            return $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Karaage', array(null, null));
+            $this->sauces[] = new Sauce($sauce);
+            
+        }
+        
+    }
+    
+    // ソースのメニュー表示メソッド
+    public function show_option() {
+        
+        foreach ($this->sauces as $sauce) {
+            
+            $sauce->show_name_price();
+            
+        }
+        
+    }
+    
+    // ソースのフォーム表示メソッド
+    public function show_option_form() {
+        
+        foreach ($this->sauces as $sauce) {
+            
+            $sauce->show_form();
+            
+        }
+        
+    }
+    
+    // 唐揚げカテゴリーを全て取ってくる
+    public static function get_datas() {
+        
+        $stmt = parent::get_datas();
+        
+        $stmt->execute(array('category' => Karaage::CATEGORY));
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
         
     }
     

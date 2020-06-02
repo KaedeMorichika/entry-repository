@@ -1,37 +1,46 @@
 <?php
-class Sauce {
-    
-    private $id;
-    private $name;
-    private $price = 100;
-    
-    public function __construct($id, $name) {
-        
-        $this->id = $id;
-        $this->name = $name;
+
+require_once 'dish.class.php';
+
+class Sauce  extends Dish {
+
+    public function __construct($name) {
+
+        parent::__construct($name, 100);
         
     }
     
-    public function getSauceID() {
-        return $this->id;
-    }
-    
-    public function getSauceName() {
-        return $this->name;
-    }
-    
-    public function getSaucePrice() {
-        return $this->price;
-    }
-    
-    public function getAllSauces($dbname, $user, $pwd = null) {
+    // ソースメニュー表示メソッド
+    public function show_name_price() {
         
-        $dbh = accessDatabase($dbname, $user, $pwd);
+        print '<tr><td>&nbsp;&nbsp;' . $this->name . 'ソース</td><td>' . $this->price . '円</td></tr>';
         
-        $sql = 'SELECT id, name FROM sauce';
+    }
+    
+    // ソースフォーム表示メソッド
+    public function show_form() {
+        
+        print '<tr><td>';
+        input_radiocheck('radio', $this->name, $_POST, 1);
+        print '</td><td>' . $this->name . 'ソース</td><td>';
+        input_text($this->name . '_num', $_POST);
+        print '</td></tr>';
+        
+    }
+    
+    // ソースのデータを全て取ってくる
+    public static function get_datas() {
+        
+        $dbname = 'teishoku';
+        $user = 'root';
+        
+        $dbh = accessDatabase($dbname, $user);
+        
+        $sql = 'SELECT name FROM sauce';
         $stmt = $dbh->prepare($sql);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Sauce', array(null, null));
+        
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
         
     }
     

@@ -3,25 +3,25 @@
 require_once 'dish.class.php';
 
 /*
- * カレークラス
+ * チキン南蛮クラス
  */
-class Curry extends Dish {
+class ChickenNanban extends Dish {
     
-    const CATEGORY = 3;
+    const CATEGORY = 2;
     
     public function __construct($name, $price) {
         
         parent::__construct($name, $price);
-        $this->category = 3;
+        $this->category = 2;
         
     }
     
-    // カレーのデータを全て取ってくる
+    // チキン南蛮のデータを全て取ってくる
     public static function get_datas() {
         
         $stmt = parent::get_datas();
         
-        $stmt->execute(array('category' => Curry::CATEGORY));
+        $stmt->execute(array('category' => ChickenNanban::CATEGORY));
         
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
         

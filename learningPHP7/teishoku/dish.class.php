@@ -1,63 +1,99 @@
-<?php 
+<?php
+require_once 'form_helper.php';
+
+/*
+ * 料理のスーパークラス
+ */
+
 class Dish {
     
-    protected $id;
     protected $name;
     protected $price;
-    protected $with_sauce;
-    protected $sauces;
     
-    public function __construct($id, $name, $price, $with_sauce = 0, $sauces = null) {
+    public function __construct($name, $price) {
         
-        $this->id = $id;
         $this->name = $name;
         $this->price = $price;
-        $this->with_sauce = $with_sauce;
-        
-        if ($with_sauce == 1) {
-            $this->sauces = $sauces;
-        }
         
     }
     
-    public function getID () {
-        return $this->id;
+    // メニュー表示用メソッド
+    public function show_name_price() {
+        
+        print '<tr><td>' . $this->name . '</td><td>' . $this->price . '円</td></tr>';
+        
     }
     
-    public function getName () {
+    // フォーム表示用メソッド
+    public function show_form() {
+        
+        print '<tr><td>';
+        input_radiocheck('radio', $this->name, $_POST, 1);
+        print '</td><td>' . $this->name . '</td><td>';
+        input_text($this->name . '_num', $_POST);
+        print '</td></tr>';
+        
+    }
+    
+    // オプションのメニュー表示用メソッド
+    public function show_option() {
+        
+    }
+    
+    // オプションのフォーム表示用メソッド
+    public function show_option_form() {
+        
+    }
+    
+    // そのクラスに属する全てのデータを取ってくる。
+    public static function get_datas () {
+        
+        $dbname = 'teishoku';
+        $user = 'root';
+        
+        $dbh = accessDatabase($dbname, $user);
+        
+        $sql = 'SELECT name, price FROM menu WHERE category = :category';
+        $stmt = $dbh->prepare($sql);
+        
+        return $stmt;
+        
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
         return $this->name;
     }
-    
-    public function getPrice () {
+
+    /**
+     * @return mixed
+     */
+    public function getPrice()
+    {
         return $this->price;
     }
     
-    public function getWithSauce () {
-        return $this->with_sauce;
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
     }
+
+    /**
+     * @param mixed $price
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    }
+
     
-    public function getSauces () {
-        return $this->sauces;
-    }
     
-    public function setSauces ($sauces) {
-        
-        if ($this->with_sauce === 1) {
-            
-            if (! empty($sauces)) {
-                
-                $this->sauces = $sauces;
-                $this->with_sauce = 1;
-            }
-            
-            return true;
-        } else {
-            
-            return false;
-        }
-        
-    }
     
 }
-
-?>
