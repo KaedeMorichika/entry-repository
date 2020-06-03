@@ -29,11 +29,11 @@ class Sauce  extends Dish {
     }
     
     // ソース会計表示メソッド
-    public function show_accounting($num) {
+    public function show_accounting($post_data, $key) {
         
-        $total_price = $this->price * $num;
+        $total_price = $this->price * $post_data[$key];
         
-        print '<tr><td>' . $this->name . 'ソース</td><td>' . $num . '</td><td>\\' . $total_price . '</td><tr>';
+        print '<tr><td>' . $this->name . 'ソース</td><td>' . $post_data[$key] . '</td><td>\\' . $total_price . '</td><tr>';
         
     }
     

@@ -9,6 +9,7 @@ class Dish {
     
     protected $name;
     protected $price;
+    protected $option_list;
     
     public function __construct($name, $price) {
         
@@ -36,10 +37,10 @@ class Dish {
     }
     
     // 会計表示用メソッド
-    public function show_accounting($num) {
+    public function show_accounting($post_data, $key) {
         
-        $total_price = $this->get_total_price($num);
-        print '<tr><td>' . $this->name . '</td><td>' . $num . '</td><td>\\' . $total_price . '</td><tr>';
+        $total_price = $this->get_total_price($post_data, $key);
+        print '<tr><td>' . $this->name . '</td><td>' . $post_data[$key] . '</td><td>\\' . $total_price . '</td><tr>';
         
     }
     
@@ -54,14 +55,14 @@ class Dish {
     }
     
     // オプションの会計表示メソッド
-    public function show_option_accounting($post_data) {
+    public function show_option_accounting($post_data, $key) {
         
     }
     
-    // 料理の合計金額を返すメソッド
-    public function get_total_price($num) {
+    // POST された料理の合計金額を返すメソッド
+    public function get_total_price($post_data, $key) {
         
-        $total_price = $this->price * $num;
+        $total_price = $this->price * $post_data[$key];
         
         return $total_price;
         
