@@ -11,6 +11,14 @@ class TeishokuComponent {
     
     private $dish_class;
     
+    /**
+     * @return mixed
+     */
+    public function getDish_class()
+    {
+        return $this->dish_class;
+    }
+
     public function __construct($dish_class) {
         
         $this->dish_class = $dish_class;
@@ -31,20 +39,10 @@ class TeishokuComponent {
         
     }
     
-    public function get_dish_category () {
+    public function show_accounting ($num) {
         
-        return $this->dish_class::
-        
-    }
-    
-    public function accounting ($num) {
-        
-        $total_price = $this->dish_class->getPrice * $num;
-        
-        return $total_price;
+        $this->dish_class->show_accounting($num);
         
     }
-    
-    
     
 }

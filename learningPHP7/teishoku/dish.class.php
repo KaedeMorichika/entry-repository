@@ -28,10 +28,18 @@ class Dish {
     public function show_form() {
         
         print '<tr><td>';
-        input_radiocheck('radio', $this->name, $_POST, 1);
+        input_radiocheck('radio', $this->name . '_checked', $_POST, 1);
         print '</td><td>' . $this->name . '</td><td>';
-        input_text($this->name . '_num', $_POST);
+        input_text($this->name, $_POST);
         print '</td></tr>';
+        
+    }
+    
+    // 会計表示用メソッド
+    public function show_accounting($num) {
+        
+        $total_price = $this->get_total_price($num);
+        print '<tr><td>' . $this->name . '</td><td>' . $num . '</td><td>\\' . $total_price . '</td><tr>';
         
     }
     
@@ -42,6 +50,20 @@ class Dish {
     
     // オプションのフォーム表示用メソッド
     public function show_option_form() {
+        
+    }
+    
+    // オプションの会計表示メソッド
+    public function show_option_accounting($post_data) {
+        
+    }
+    
+    // 料理の合計金額を返すメソッド
+    public function get_total_price($num) {
+        
+        $total_price = $this->price * $num;
+        
+        return $total_price;
         
     }
     
@@ -57,6 +79,22 @@ class Dish {
         $stmt = $dbh->prepare($sql);
         
         return $stmt;
+        
+    }
+    
+    // 名前から値段を取得するメソッド
+    public static function get_price_from_name ($name) {
+        
+        $dbname = 'teishoku';
+        $user = 'root';
+        
+        $dbh = accessDatabase($dbname, $user);
+        
+        $sql = 'SELECT price FROM menu WHERE name = :name';
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute(array('name' => $name));
+        
+        return $stmt->fetch(PDO::FETCH_COLUMN);
         
     }
     

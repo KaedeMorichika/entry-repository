@@ -21,10 +21,19 @@ class Sauce  extends Dish {
     public function show_form() {
         
         print '<tr><td>';
-        input_radiocheck('radio', $this->name, $_POST, 1);
+        input_radiocheck('radio', $this->name . '_checked', $_POST, 1);
         print '</td><td>' . $this->name . 'ソース</td><td>';
-        input_text($this->name . '_num', $_POST);
+        input_text($this->name, $_POST);
         print '</td></tr>';
+        
+    }
+    
+    // ソース会計表示メソッド
+    public function show_accounting($num) {
+        
+        $total_price = $this->price * $num;
+        
+        print '<tr><td>' . $this->name . 'ソース</td><td>' . $num . '</td><td>\\' . $total_price . '</td><tr>';
         
     }
     

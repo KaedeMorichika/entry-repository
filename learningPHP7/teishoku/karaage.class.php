@@ -52,6 +52,31 @@ class Karaage extends Dish {
         
     }
     
+    // ソースの会計表示メソッド
+    public function show_option_accounting($post_data) {
+        
+        foreach ($this->sauces as $sauce) {
+            
+            $total_price = 0;
+            
+            if (!empty($post_data[$sauce->getName()])) {
+                
+                $sauce->show_accounting();
+                
+            }
+            
+        }
+        
+    }
+    
+    public function get_total_price($num) {
+        
+        $total_price = parent::get_total_price($num);
+        
+        return $total_price;
+        
+    }
+    
     // 唐揚げカテゴリーを全て取ってくる
     public static function get_datas() {
         
