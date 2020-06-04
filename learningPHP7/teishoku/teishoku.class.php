@@ -6,15 +6,45 @@ require_once 'file_importer.php';
  * 定食屋の内部処理クラス
  */
 
-class Teishoku {
+class Teishokuya {
     
+    private $teishokuya_parts;
+    
+    public function __construct($teishokuya_parts) {
+        
+        $this->teishokuya_parts = $teishokuya_parts;
+        
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getTeishokuya_parts()
+    {
+        return $this->teishokuya_parts;
+    }
+
+    /**
+     * @param mixed $teishokuya_parts
+     */
+    public function setTeishokuya_parts($teishokuya_parts)
+    {
+        $this->teishokuya_parts = $teishokuya_parts;
+    }
+    
+    public function addTeishokuya_parts($teishokuya_part) {
+        
+        $this->teishokuya_parts[] = $teishokuya_part;
+        
+    }
+
     // メニュー組み立てメソッド
-    public static function show_menu($teishoku_parts) {
+    public function show_menu() {
         
         print '<p1>お品書き<p1><br>';
         print '<table border="1"><tr><th>メニュー</th><th>値段</th></tr>';
         
-        foreach ($teishoku_parts as $teishoku_part) {
+        foreach ($this->teishokuya_parts as $teishoku_part) {
             
             $teishoku_part->show_name_price_with_option();
             
@@ -25,7 +55,7 @@ class Teishoku {
     }
     
     // フォーム組み立てメソッド
-    public static function show_form($teishoku_parts, $action) {
+    public function show_form($action) {
         
         print 'ご注文になるメニューにチェックを入れ、個数を入力してください。';
         
@@ -33,7 +63,7 @@ class Teishoku {
         
         print '<table><tr><th></th><th>メニュー</th><th>個数</th></tr>';
         
-        foreach ($teishoku_parts as $teishoku_part) {
+        foreach ($this->teishokuya_parts as $teishoku_part) {
             
             $teishoku_part->show_form_with_option();
             

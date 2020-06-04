@@ -36,16 +36,17 @@ foreach ($curries as $curry) {
     
 }
 
-$teishoku_parts = array_merge($karaage_parts, $chicken_nanban_parts, $curry_parts);
+$teishokuya_parts = array_merge($karaage_parts, $chicken_nanban_parts, $curry_parts);
+
+$teishokuya = new Teishokuya($teishokuya_parts);
 
 // メニュー表示
-Teishoku::show_menu($teishoku_parts);
+$teishokuya->show_menu();
 
 print '<br>';
 
 // フォーム表示
-Teishoku::show_form($teishoku_parts, 'accounting.php');
-
+$teishokuya->show_form('accounting.php');
 
 
 
