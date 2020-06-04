@@ -98,7 +98,7 @@ function validate_form_karaage($post_data) {
         
         foreach ($sauce_list as $sauce) {
             
-            if (array_key_exists($sauce, $post_data)) {
+            if (array_key_exists($sauce . '_checked', $post_data)) {
                 
                 $errors[] = 'ソースは唐揚げにのみ付けることができます。';
                 break;

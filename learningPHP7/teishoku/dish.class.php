@@ -18,6 +18,30 @@ class Dish {
         
     }
     
+    // オプションも含めメニュー表示
+    public function show_name_price_with_option() {
+        
+        $this->show_name_price();
+        $this->show_option();
+        
+    }
+    
+    // オプションも含めフォーム表示
+    public function show_form_with_option() {
+        
+        $this->show_form();
+        $this->show_option_form();
+        
+    }
+    
+    // オプションも含め会計表示
+    public function show_accounting_with_option($post_data, $key) {
+        
+        $this->show_accounting($post_data, $key);
+        $this->show_option_accounting($post_data, $key);
+        
+    }
+    
     // メニュー表示用メソッド
     public function show_name_price() {
         
