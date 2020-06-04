@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2020-05-27 08:58:20
+-- 生成日時: 2020-06-04 03:41:21
 -- サーバのバージョン： 10.4.11-MariaDB
 -- PHP のバージョン: 7.4.4
 
@@ -24,25 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `category`
---
-
-CREATE TABLE `category` (
-  `id` int(11) NOT NULL,
-  `name` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- テーブルのデータのダンプ `category`
---
-
-INSERT INTO `category` (`id`, `name`) VALUES
-(1, 'Karaage'),
-(2, 'Curry');
-
--- --------------------------------------------------------
-
---
 -- テーブルの構造 `menu`
 --
 
@@ -50,18 +31,17 @@ CREATE TABLE `menu` (
   `id` int(11) NOT NULL,
   `category` int(11) NOT NULL,
   `name` varchar(20) NOT NULL,
-  `price` int(11) NOT NULL,
-  `with_sauce` tinyint(4) NOT NULL DEFAULT 0
+  `price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- テーブルのデータのダンプ `menu`
 --
 
-INSERT INTO `menu` (`id`, `category`, `name`, `price`, `with_sauce`) VALUES
-(1, 1, 'Karaage', 1000, 1),
-(2, 1, 'ChickenNanban', 1200, 0),
-(3, 2, 'Curry', 850, 0);
+INSERT INTO `menu` (`id`, `category`, `name`, `price`) VALUES
+(1, 1, 'Karaage', 1000),
+(2, 2, 'ChickenNanban', 1200),
+(3, 3, 'Curry', 850);
 
 -- --------------------------------------------------------
 
@@ -88,12 +68,6 @@ INSERT INTO `sauce` (`id`, `name`) VALUES
 --
 
 --
--- テーブルのインデックス `category`
---
-ALTER TABLE `category`
-  ADD PRIMARY KEY (`id`);
-
---
 -- テーブルのインデックス `menu`
 --
 ALTER TABLE `menu`
@@ -102,12 +76,6 @@ ALTER TABLE `menu`
 --
 -- ダンプしたテーブルのAUTO_INCREMENT
 --
-
---
--- テーブルのAUTO_INCREMENT `category`
---
-ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- テーブルのAUTO_INCREMENT `menu`
