@@ -2,6 +2,9 @@
 
 require_once 'file_importer.php';
 
+/*
+ * データベース接続
+ */
 function accessDatabase ($dbname, $user, $pwd = null) {
     
     try {
@@ -22,6 +25,9 @@ function accessDatabase ($dbname, $user, $pwd = null) {
     
 }
 
+/*
+ * 定食屋フォームバリデーション
+ */
 function validate_form ($post_data) {
     
     $errors = array();
@@ -80,6 +86,9 @@ function validate_form ($post_data) {
     
 }
 
+/*
+ * 唐揚げについてのバリデーション
+ */
 function validate_form_karaage($post_data) {
     
     $errors = array();

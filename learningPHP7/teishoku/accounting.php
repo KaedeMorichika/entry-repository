@@ -2,8 +2,7 @@
 
 require_once 'file_importer.php';
 
-var_dump($_POST);
-
+// バリデーション
 $errors1 = validate_form($_POST);
 $errors2 = validate_form_karaage($_POST);
 
@@ -11,6 +10,7 @@ $errors = array_merge($errors1, $errors2);
 
 if (!empty($errors)) {
     
+    // 入力エラーがあった場合にエラー表示
     print '入力エラーがあります。';
     print '<ul>';
     
@@ -25,6 +25,7 @@ if (!empty($errors)) {
     
 } else {
     
+    // POST 値の整形
     $post_data = array();
     
     foreach ($_POST as $key => $value) {
@@ -35,7 +36,7 @@ if (!empty($errors)) {
         }
     }
     
-    var_dump($post_data);
+    // 会計表示
     Teishoku::show_accounting($post_data);
 }
 

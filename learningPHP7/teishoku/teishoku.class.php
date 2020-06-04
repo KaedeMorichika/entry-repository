@@ -60,6 +60,7 @@ class Teishoku {
             $teishoku_component = null;
             $price = Dish::get_price_from_name($key);
             
+            // POST 値に応じて、TeishokuComponent クラスに入る料理クラスが変化。
             if ($key === 'Karaage') {
                 
                 $teishoku_component = new TeishokuComponent(new Karaage($key, $price));
