@@ -11,7 +11,7 @@ class Sauce  extends Dish {
     }
     
     // ソースメニュー表示メソッド
-    public function show_name_price() {
+    public function show_menu() {
         
         print '<tr><td>&nbsp;&nbsp;' . $this->name . 'ソース</td><td>' . $this->price . '円</td></tr>';
         
@@ -34,6 +34,14 @@ class Sauce  extends Dish {
         $total_price = $this->price * $post_data[$key];
         
         print '<tr><td>' . $this->name . 'ソース</td><td>' . $post_data[$key] . '</td><td>\\' . $total_price . '</td><tr>';
+        
+    }
+    
+    public function get_total_price($post_data, $key) {
+        
+        $total_price = $this->price * $post_data[$key];
+        
+        return $total_price;
         
     }
     

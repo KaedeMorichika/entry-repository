@@ -46,7 +46,7 @@ class Teishokuya {
         
         foreach ($this->teishokuya_parts as $teishoku_part) {
             
-            $teishoku_part->show_name_price_with_option();
+            $teishoku_part->show_menu();
             
         }
         
@@ -65,8 +65,7 @@ class Teishokuya {
         
         foreach ($this->teishokuya_parts as $teishoku_part) {
             
-            $teishoku_part->show_form_with_option();
-            
+            $teishoku_part->show_form();
             
         }
         
@@ -89,7 +88,7 @@ class Teishokuya {
             
             if (array_key_exists($key, $this->teishokuya_parts)) {
                 
-                $this->teishokuya_parts[$key]->show_accounting_with_option($post_data, $key);
+                $this->teishokuya_parts[$key]->show_accounting($post_data, $key);
                 $total_price += $this->teishokuya_parts[$key]->get_total_price($post_data, $key);
             
             }

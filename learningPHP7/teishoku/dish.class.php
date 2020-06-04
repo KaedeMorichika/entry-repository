@@ -5,7 +5,7 @@ require_once 'form_helper.php';
  * 料理のスーパークラス
  */
 
-class Dish {
+abstract class Dish {
     
     protected $name;
     protected $price;
@@ -18,79 +18,17 @@ class Dish {
         
     }
     
-    // オプションも含めメニュー表示
-    public function show_name_price_with_option() {
-        
-        $this->show_name_price();
-        $this->show_option();
-        
-    }
-    
-    // オプションも含めフォーム表示
-    public function show_form_with_option() {
-        
-        $this->show_form();
-        $this->show_option_form();
-        
-    }
-    
-    // オプションも含め会計表示
-    public function show_accounting_with_option($post_data, $key) {
-        
-        $this->show_accounting($post_data, $key);
-        $this->show_option_accounting($post_data, $key);
-        
-    }
-    
     // メニュー表示用メソッド
-    public function show_name_price() {
-        
-        print '<tr><td>' . $this->name . '</td><td>' . $this->price . '円</td></tr>';
-        
-    }
+    abstract public function show_menu();
     
     // フォーム表示用メソッド
-    public function show_form() {
-        
-        print '<tr><td>';
-        input_radiocheck('radio', $this->name . '_checked', $_POST, 1);
-        print '</td><td>' . $this->name . '</td><td>';
-        input_text($this->name, $_POST);
-        print '</td></tr>';
-        
-    }
+    abstract public function show_form();
     
     // 会計表示用メソッド
-    public function show_accounting($post_data, $key) {
-        
-        $total_price = $this->get_total_price($post_data, $key);
-        print '<tr><td>' . $this->name . '</td><td>' . $post_data[$key] . '</td><td>\\' . $total_price . '</td><tr>';
-        
-    }
-    
-    // オプションのメニュー表示用メソッド
-    public function show_option() {
-        
-    }
-    
-    // オプションのフォーム表示用メソッド
-    public function show_option_form() {
-        
-    }
-    
-    // オプションの会計表示メソッド
-    public function show_option_accounting($post_data, $key) {
-        
-    }
+    abstract public function show_accounting($post_data, $key);
     
     // POST された料理の合計金額を返すメソッド
-    public function get_total_price($post_data, $key) {
-        
-        $total_price = $this->price * $post_data[$key];
-        
-        return $total_price;
-        
-    }
+    abstract public function get_total_price($post_data, $key);
     
     // そのクラスに属する全てのデータを取ってくる。
     public static function get_datas () {
