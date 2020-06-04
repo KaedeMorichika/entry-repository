@@ -6,7 +6,7 @@ require_once 'form_helper.php';
  * 定食屋の部品群
  * プロパティに入る料理クラスによってメソッドの返り値が変化する。
  * EX) Karaage, ChickenNanban, Curry
- * クラス呼び出しの一本化。
+ * 料理クラス呼び出しの一本化。
  */
 
 class TeishokuComponent {

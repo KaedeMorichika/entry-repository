@@ -40,6 +40,9 @@ $teishoku_components = array_merge($karaage_parts, $chicken_nanban_parts, $curry
 
 // メニュー表示
 Teishoku::show_menu($teishoku_components);
+
+print '<br>';
+
 // フォーム表示
 Teishoku::show_form($teishoku_components, 'accounting.php');
 
