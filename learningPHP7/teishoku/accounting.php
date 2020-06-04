@@ -27,17 +27,37 @@ if (!empty($errors)) {
     
     // POST 値の整形
     $post_data = array();
+    $teishokuya_parts = array();
     
     foreach ($_POST as $key => $value) {
         
         if (! strpos($key, '_checked') and strlen(trim($value))) {
             
             $post_data[$key] = $value;
+            $price = Dish::get_price_from_name($key);
+            
+            if ($key === 'Karaage') {
+                
+                $teishokuya_parts[$key] = new Karaage($key, $price);
+                
+            } else if ($key === 'ChickenNanban') {
+                
+                $teishokuya_parts[$key] = new ChickenNanban($key, $price);
+                
+            } else if ($key === 'Curry') {
+                
+                $teishokuya_parts[$key] = new Curry($key, $price);
+                
+            }
+            
         }
     }
     
+    $teishokuya = new Teishokuya($teishokuya_parts);
+    
     // 会計表示
-    Teishoku::show_accounting($post_data);
+    $teishokuya->show_accounting($post_data);
+    
 }
 
 ?>
