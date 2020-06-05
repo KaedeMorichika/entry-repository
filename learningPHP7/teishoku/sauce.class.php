@@ -33,7 +33,7 @@ class Sauce  extends Dish {
         
         $total_price = $this->price * $post_data[$key];
         
-        print '<tr><td>' . $this->name . 'ソース</td><td>' . $post_data[$key] . '</td><td>\\' . $total_price . '</td><tr>';
+        print '<tr><td>&nbsp;&nbsp' . $this->name . 'ソース</td><td>' . $post_data[$key] . '</td><td>\\' . $total_price . '</td><tr>';
         
     }
     
