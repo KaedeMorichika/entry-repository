@@ -8,11 +8,11 @@
             background: aliceblue;
         }
         .article {
-            margin: 10px 20px;
+            margin: 15px 20px;
         }
 
         .summary {
-            width: 400px;
+            width: 800px;
             font-size: 12px;
         }
     </style>
@@ -21,7 +21,13 @@
         <!--
         $(window).on('load', function() {
 
+            getNPBNews();
+
             $('#update').on('click', function() {
+                getNPBNews();
+            })
+
+            function getNPBNews() {
                 $.ajax({
                     url:'http://localhost/entry-repository/npb_news/getNPBNews.php',
                     type:'GET',
@@ -35,7 +41,7 @@
                     console.log(data);
 
                 })
-            })
+            }
 
             function callback(data) {
 
@@ -44,17 +50,20 @@
                 $.each(data, function (index, value) {
 
                     $('<div></div>', {
-                        addClass: 'article',
+                        'class': 'article',
                         'id': 'article'+index
                     }).appendTo('#news_catalog');
 
-                    $('#article'+index).append(
-                        '<a class="title" href="' + value['url'][0] + '">' + value['title'][0] + '</a>'
-                    );
+                    $('<a></a>', {
+                        'class': 'title',
+                        'href': value['url'][0],
+                        'text': value['title'][0]
+                    }).appendTo('#article'+index);
 
-                    $('#article'+index).append(
-                        '<div class="summary">' + value['summary'][0] + '</div>'
-                    );
+                    $('<div></div>', {
+                        'class': 'summary',
+                        'text': value['summary'][0]
+                    }).appendTo('#article'+index);
                 })
             }
         })
