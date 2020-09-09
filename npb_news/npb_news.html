@@ -26,8 +26,14 @@
                     url:'http://localhost/entry-repository/npb_news/getNPBNews.php',
                     type:'GET',
                     dataType:'json'
-                }).done(function(data, status, xhr) {
+
+                }).done(function(data) {
                     callback(data);
+
+                }).fail(function(data) {
+                    alert('情報の取得に失敗しました。');
+                    console.log(data);
+
                 })
             })
 
