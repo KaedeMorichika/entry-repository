@@ -5,7 +5,7 @@
 function input_text($element_name, $values) {
     print '<input type="text" name="'.$element_name;
     if (array_key_exists($element_name, $values)) {
-        print ' value="'.htmlentities($values[$element_name]);
+        print '" value="'.htmlentities($values[$element_name]);
     }
     print '"/>';
 }

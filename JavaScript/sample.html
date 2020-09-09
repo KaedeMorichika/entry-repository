@@ -1,0 +1,90 @@
+
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+    <title>JavaScript&nbsp;お勉強</title>
+    <style type="text/css">
+
+        #field {
+            position: absolute;
+        }
+
+        #obj {
+            position: absolute;
+            left: 100px;
+            top: 100px;
+            width: 100px;
+            height: 150px;
+            background: red;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<h1 id="title">JavaScript&nbsp;お勉強</h1>
+
+<div id="field">
+    <div id="obj" onmouseover="changeColorEvent();"></div>
+</div>
+
+</body>
+
+<script type="text/javascript">
+    <!--
+    const dx = 1;
+    const interval = 100;
+    let x = 0;
+    let field = document.getElementById('field');
+    let obj = document.getElementById('obj');
+
+    setInterval(function() {
+        x += dx;
+        field.style.left = x + 'px';
+    }, interval);
+
+    function changeColorEvent() {
+
+        let color = Math.floor(Math.random() * 0xFFFFFF).toString(16);
+
+        let changeColor = function(randomColor) {
+            obj.style.background = randomColor;
+        }
+
+        let addComment = function() {
+
+            let comment = document.createElement('p');
+            comment.innerHTML = 'クリックで色が変わります';
+            comment.id = 'comment';
+            field.appendChild(comment);
+
+        }
+
+        let removeComment = function() {
+
+            let comment = field.lastElementChild;
+            field.removeChild(comment);
+
+        }
+
+        for (let count = color.length; count < 6; count++) {
+            color = '0' + color;
+        }
+
+        let randomColor = '#' + color;
+
+        obj.addEventListener('click', function (){
+            changeColor(randomColor);
+        }, false);
+
+        field.addEventListener('mouseover', addComment, false);
+        field.addEventListener('mouseleave', removeComment, false);
+
+    }
+
+    //-->
+</script>
+
+</html>

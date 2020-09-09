@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+
+    <title>サンプル</title>
+    <style type="text/css">
+        input[type="button"] {
+            margin-top: 20px;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        <!--
+        $(window).on('load', function () {
+            $('#send_request').on('click', function() {
+                let request = new XMLHttpRequest;
+                alert('非同期通信を開始します。');
+                request.open('GET', 'ajax_sample.php', true);
+                //request.setRequestHeader('User-Agent', 'XMLHttpRequest');
+                request.onreadystatechange = function () {
+                    if (request.readyState == 4 && request.status == 200) {
+                        callback(request);
+                    }
+                }
+                request.send();
+            })
+
+            function callback(request) {
+                $('#msg').empty();
+                let response = JSON.parse(request.responseText);
+                for (let key in response) {
+                    let p_element = '<p>' + key + '&nbsp;:&nbsp;' + response[key] + '</p>';
+                    $('#msg').append(p_element);
+                }
+            }
+        })
+            //-->
+    </script>
+</head>
+
+<body>
+<h1 id="title">Ajax サンプル</h1>
+<div id="msg"></div>
+<input type="button" value="クリック" id="send_request">
+</body>
+
+</html>

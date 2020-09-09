@@ -1,0 +1,76 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>サンプル</title>
+    <style type="text/css">
+        #back {
+            background: #FFAA66;
+            position: absolute;
+            left: 100px;
+            right: 100px;
+            width: 300px;
+            height: 300px;
+        }
+
+        #front {
+            background: #FF0000;
+            position: absolute;
+            left: 250px;
+            right: 250px;
+            width: 20px;
+            height: 20px;
+        }
+    </style>
+    <script type="text/javascript">
+        <!--
+        let dx = 0;
+        let dy = 0;
+        let x = 150;
+        let y = 150;
+        setInterval(doAction, 50);
+
+        function startMove() {
+
+            dx = Math.floor(Math.random() * 11 - 5);
+            dy = Math.floor(Math.random() * 11 - 5);
+
+        }
+
+        function stopMove() {
+
+            dx = 0;
+            dy = 0;
+
+        }
+
+        function doAction() {
+
+            if (x < 0 || x > 280) {
+                dx *= -1;
+            }
+
+            if (y < 0 || y > 280) {
+                dy *= -1;
+            }
+
+            x += dx;
+            y += dy;
+
+            let front = document.getElementById('front');
+            front.style.left = x + 'px';
+            front.style.top = y + 'px';
+
+        }
+
+        //-->
+</script>
+</head>
+<body>
+    <h1 id="title">サンプル</h1>
+    <div id="back" onclick="startMove();" ondblclick="stopMove();">
+    <div id="front"></div>
+    </div>
+</body>
+
+</html>

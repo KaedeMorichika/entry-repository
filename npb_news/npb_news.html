@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+    <title>日本プロ野球ニュース</title>
+    <style type="text/css">
+        body {
+            background: aliceblue;
+        }
+        .article {
+            margin: 10px 20px;
+        }
+
+        .summary {
+            width: 400px;
+            font-size: 12px;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        <!--
+        $(window).on('load', function() {
+
+            $('#update').on('click', function() {
+                $.ajax({
+                    url:'http://localhost/entry-repository/npb_news/getNPBNews.php',
+                    type:'GET',
+                    dataType:'json'
+                }).done(function(data, status, xhr) {
+                    callback(data);
+                })
+            })
+
+            function callback(data) {
+
+                $('#news_catalog').empty();
+
+                $.each(data, function (index, value) {
+
+                    $('<div></div>', {
+                        addClass: 'article',
+                        'id': 'article'+index
+                    }).appendTo('#news_catalog');
+
+                    $('#article'+index).append(
+                        '<a class="title" href="' + value['url'][0] + '">' + value['title'][0] + '</a>'
+                    );
+
+                    $('#article'+index).append(
+                        '<div class="summary">' + value['summary'][0] + '</div>'
+                    );
+
+                })
+            }
+
+        })
+            //-->
+    </script>
+</head>
+
+<body>
+<h1 id="title">日本プロ野球ニュース</h1>
+<input type="button" id="update" value="ニュースを更新">
+<div id="news_catalog">
+
+</div>
+
+</body>
+
+
+</html>

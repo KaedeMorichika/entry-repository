@@ -8,9 +8,9 @@ session_start();
 // DBの処理
 $dsn = 'mysql:dbname=teishoku;host=localhost';
 $user = 'root';
-$psw = 'db090902';
+
 try {
-    $db = new PDO($dsn, $user, $psw);
+    $db = new PDO($dsn, $user);
     $sql1 = 'SELECT name, price FROM menu';
     $sql2 = 'SELECT name FROM sauce';
     $menu = $db->query($sql1)->fetchAll(PDO::FETCH_ASSOC);

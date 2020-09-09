@@ -34,6 +34,18 @@ class Group extends Human {
         }
     }
     
+    public function show_table () {
+        print '<table border="1"><tr><th>名前</th><th>身長（cm）</th><th>体重（kg）</th><th>BMI</th></tr>';
+        foreach ($this->group as $human) {
+            print '<tr>';
+            foreach ($human as $item) {
+                print '<td>'.$item.'</td>';
+            }
+            print '<td>'.$human->calcBMI().'</td></tr>';
+        }
+        print '</table>';
+    }
+    
     public function add_member ($member) {
         $this->group[] = $member;
     }
@@ -50,11 +62,13 @@ class Group extends Human {
         $num = count($this->group);
         $height = 0;
         $weight = 0;
+        $bmi = 0;
         foreach ($this->group as $human) {
             $height += $human->height;
             $weight += $human->weight;
+            $bmi += $human->calcBMI();
         }
-        return array('height'=>$height/$num, 'weight'=>$weight/$num);
+        return array('height'=>$height/$num, 'weight'=>$weight/$num, 'bmi'=>$bmi/$num);
     }
 }
 
@@ -78,8 +92,10 @@ $group->add_member($lebron);
 foreach ($group->names() as $name) {
     print $name.'<br>';
 }
+$group->show_table();
 $average = $group->calc_average();
 print '平均身長　' . $average['height'] . 'cm<br>';
-print '平均体重　' . $average['weight'] . 'kg';
+print '平均体重　' . $average['weight'] . 'kg<br>';
+print 'BMI　' . $average['bmi'];
 
 ?>
