@@ -71,19 +71,19 @@
 
                 $.each(data, function (index, value) {
 
-                    $('<div></div>', {
+                    $('<div>', {
                         'class': 'article',
                         'id': 'article'+index
                     }).appendTo('#news_catalog');
 
-                    $('<a></a>', {
+                    $('<a>', {
                         'class': 'title',
                         'href': value['url'][0],
                         'target': '_blank',
                         'text': value['title'][0]
                     }).appendTo('#article'+index);
 
-                    $('<div></div>', {
+                    $('<div>', {
                         'class': 'summary',
                         'text': value['summary'][0]
                     }).appendTo('#article'+index);
