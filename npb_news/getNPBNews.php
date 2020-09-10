@@ -22,6 +22,8 @@ try {
         $articles[] = $contents;
     }
 
+    sleep(3);
+
     header('Content-Type: text/json; charset=utf-8');
     echo(json_encode($articles));
 
