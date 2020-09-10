@@ -15,11 +15,33 @@
             width: 800px;
             font-size: 12px;
         }
+
+        #loader {
+            margin-left: 5px;
+            display: none;
+        }
+
+        #loader_image {
+            width: 15px;
+            height: 15px;
+        }
+
+        #loader_message {
+            margin-left: 5px;
+        }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript">
         <!--
         $(window).on('load', function() {
+
+            $(document)
+                .ajaxStart(function() {
+                    $('#loader').css('display', 'inline');
+                })
+                .ajaxStop(function() {
+                    $('#loader').css('display', 'none');
+                })
 
             getNPBNews();
 
@@ -75,6 +97,9 @@
 <body>
 <h1 id="title">日本プロ野球ニュース</h1>
 <input type="button" id="update" value="ニュースを更新">
+<span id="loader">
+<img id="loader_image" src="loading01_r1_c1.gif" alt="Now Loading..."/><span id="loader_message">Now Loading...</span>
+</span>
 <div id="news_catalog">
 
 </div>
