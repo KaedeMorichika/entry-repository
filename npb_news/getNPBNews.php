@@ -28,5 +28,5 @@ try {
     echo(json_encode($articles));
 
 } catch (Exception $e) {
-    $status = 'FAILED';
+    echo 'FAILED';
 }
