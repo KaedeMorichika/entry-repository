@@ -39,9 +39,6 @@
                 .ajaxStart(function() {
                     $('#loader').css('display', 'inline');
                 })
-                .ajaxStop(function() {
-                    $('#loader').css('display', 'none');
-                })
 
             getNPBNews();
 
@@ -57,9 +54,17 @@
 
                 }).done(function(data) {
                     callback(data);
+                    $('#loader').css('display', 'none');
 
                 }).fail(function(data) {
-                    alert('情報の取得に失敗しました。');
+                    $('#loader').css('display', 'none');
+
+                    // ローダーの非表示を反映する前に alert が出てしまうので、alert の実行を少し遅らせる。
+                    let load_timer = setInterval(function() {
+                        alert('情報の取得に失敗しました。');
+                        clearInterval(load_timer);
+                    }, 50);
+
                     console.log(data);
 
                 })
