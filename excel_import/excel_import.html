@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html";p charset="UTF-8">
+    <title>Excel インポート</title>
+    <style type="text/css">
+        .drop_area {
+            width: 600px;
+            height: 200px;
+            border: 2px solid #FF0000;
+            border-radius: 6px;
+        }
+
+        .inputfile {
+            display: none;
+        }
+
+        #drop_message {
+            text-align: center;
+        }
+
+        /* グリッドコンテナ */
+        #excel-grid {
+            height: 500px;
+            overflow: auto;
+            font-size: .8rem;
+            position: relative;
+            margin: 10px 0;
+        }
+
+        /* グリッドの各行のスタイル */
+        #excel-grid > .row {
+            display: grid;
+            column-gap: 0px;
+            row-gap: 0px;
+            border-top: 1px solid #999;
+            border-left: 1px solid #999;
+        }
+
+        /* グリッドヘッダの固定(position: sticky) */
+        .row.head {
+            font-weight: bold;
+            border-bottom: 2px solid #ccc !important;
+            position: -webkit-sticky !important;
+            position: sticky !important;
+            z-index: 2 !important;
+            top:0 !important;
+            background-color: #544a65;
+            color:white;
+        }
+
+        /* セルのスタイル */
+        .row > .cell {
+            height: 1rem;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            border-bottom: 1px solid #999;
+            border-right: 1px solid #999;
+            display: block;
+            padding: 5px;
+        }
+
+        /* グリッドヘッダのセル部分 */
+        .head > .cell {
+            padding: 10px 5px !important;
+        }
+
+        /*セル編集時のフォーカス表示*/
+        .row > .cell.editing {
+            outline: 3px solid #bdceff;
+            box-shadow: 0 0 10px 2px royalblue;
+        }
+
+        .header_button {
+            height: 30px;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<h1>Excel インポート</h1>
+<div id="page_switch">
+    <div class="ddarea" id="page1">
+        <input type="file" name="excel_file" class="inputfile">
+        <div class="drop_area">
+            <p id="drop_message">ここにファイルをドラッグ</p>
+        </div>
+    </div>
+    <div id="page2" data-connector_count="0"></div>
+</div>
+<div class="header">
+    <p id="headers"></p>
+</div>
+
+<!-- グリッドエリア -->
+<div id="excel-grid">
+    <div class="row head"></div>
+    <div class="row body"></div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.5/xlsx.full.min.js"></script>
+<script src="excel_import_utils.js"></script>
+<script type="text/javascript">
+    <!--
+    $(function() {
+        $('html').on('dragover', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        })
+        $('html').on('drop', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        })
+
+        $('.row.body')
+            .on('click', '.cell', on_cell_click)
+            .on('blur', '.cell', on_cell_blur)
+            .on('keydown', '.cell', on_cell_keydown);
+
+        $('.drop_area').on('dragover', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('#drop_message').text('ドロップ');
+        })
+
+        $('.drop_area').on('dragleave', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('#drop_message').text('ここにふぃあるをドラッグ');
+        })
+
+        $('.drop_area').on('drop', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('#drop_message').text('処理中');
+
+            let file = e.originalEvent.dataTransfer.files[0];
+            let reader = new FileReader();
+
+            reader.onload = on_excel_file_load;
+            reader.readAsArrayBuffer(file);
+
+            $('#drop_message').text('表示完了！');
+            add_connector_header();
+            switch_page('page1', 'page2');
+        })
+
+        $('.header_button').on('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            let connector_count = parseInt($('#page2').data('connector_count'));
+            $('span')
+                .text($(this).text())
+                .appendTo('#connector'+connector_count);
+            if (connector_count < 3) {
+                connector_count++;
+            } else {
+                connector_count = 0;
+            }
+
+            $('#page2').data('connector_count', String(connector_count));
+
+        })
+
+        function add_connector_header() {
+            let headers = ['配送先カテゴリー', '配送先名', 'フリガナ'];
+            $(headers).each(function(index, val){
+                $('<p>')
+                    .addClass('connector')
+                    .attr('id', 'connector'+index)
+                    .append('<span>'+val+'：</span>')
+                    .appendTo($('#page2'));
+            });
+        }
+
+        function switch_page(id1, id2) {
+            $('#'+id1).css('display', 'none');
+            $('#'+id2).css('display', 'inline');
+        }
+    })
+        //-->
+</script>
+
+</html>

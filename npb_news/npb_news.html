@@ -50,7 +50,7 @@
                 $.ajax({
                     url:'http://localhost/entry-repository/npb_news/getNPBNews.php',
                     type:'GET',
-                    dataType:'json'
+                    dataType:'xml'
 
                 }).done(function(data) {
                     callback(data);
