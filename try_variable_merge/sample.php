@@ -2,4 +2,4 @@
 
 echo 'this is a sample';
 
-echo 'here is hoge branch';
+echo 'here is x branch';
