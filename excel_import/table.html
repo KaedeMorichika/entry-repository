@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <title>Excel インポート</title>
+    <style type="text/css">
+
+        #table_area {
+            width: 800px;
+        }
+
+        #table {
+            width: auto;
+            overflow: auto;
+            font-size: .8rem;
+            position: relative;
+            margin: 10px 0;
+        }
+
+        #table > .row {
+            display: grid;
+            column-gap: 0px;
+            row-gap: 0px;
+            width: auto;
+            /*border-right: 1px solid #999;*/
+            border-left: 1px solid #999;
+        }
+
+        .row > .cell {
+            height: 2rem;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            border-top: 1px solid #999;
+            border-bottom: 1px solid #999;
+            border-right: 1px solid #999;
+            display: block;
+            padding: 5px;
+        }
+
+        .row.head > .cell {
+            font-weight: bold;
+            border-bottom: 5px double #ccc !important;
+        }
+
+    </style>
+
+</head>
+<body>
+<h1>テーブル</h1>
+<div id="table_area">
+    <div id="table">
+        <div id="head" class="row head">
+
+        </div>
+        <div id="body" class="row body">
+
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.5/xlsx.full.min.js"></script>
+<script src="excel_import_utils.js"></script>
+<script type="text/javascript">
+    <!--
+    $(window).on('load', function(){
+        let columns = ['配送先カテゴリー', '配送先名', 'フリガナ'];
+        $(columns).each(function(i, val){
+            $('<div>')
+                .addClass('cell')
+                .attr('id', 'head_cell'+i)
+                .text(val)
+                .appendTo($('#head'));
+            $('<div>')
+                .addClass('cell')
+                .attr('id', 'body_cell'+i)
+                .text('')
+                .appendTo($('#body'));
+            $('.row.head, .row.body').css('grid-template-columns', 'repeat(3, 300px)');
+        })
+    })
+    //-->
+</script>
+
+</html>
