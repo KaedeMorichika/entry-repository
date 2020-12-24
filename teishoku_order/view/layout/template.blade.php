@@ -3,11 +3,13 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
     <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href=@yield('style')>
     <title>@yield('title')</title>
 </head>
 <body>
-    @yield('header')
-    <h1>@yield('title')</h1>
+@yield('header')
+<div id="content">
     @yield('content')
+</div>
 </body>
 </html>

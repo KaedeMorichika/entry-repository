@@ -1,6 +1,7 @@
 
 
 <?php $__env->startSection('title', 'ログインページ'); ?>
+<?php $__env->startSection('style', 'css/login.css'); ?>
 
 <?php echo $__env->make('layout/header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
