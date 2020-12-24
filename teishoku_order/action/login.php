@@ -2,4 +2,4 @@
 use duncan3dc\Laravel\Blade;
 
 Blade::addPath('view');
-Blade::render($action);
+echo Blade::render($action);
