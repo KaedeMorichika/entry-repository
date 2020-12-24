@@ -1,0 +1,14 @@
+#header {
+    width: 100%;
+    height: 8rem;
+    background: #FFAA66;
+    text-align: center;
+    color: #ffffff;
+}
+
+#product_title {
+    font-size: 6rem;
+    font-weight: bold;
+    text-shadow: 0 0 5px #000000 ;
+    vertical-align: center;
+}

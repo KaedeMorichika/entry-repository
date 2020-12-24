@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
-    <title>ログイン</title>
-</head>
-<body>
-<h1>ログインページ</h1>
+
+
+<?php $__env->startSection('title', 'ログインページ'); ?>
+
+<?php echo $__env->make('layout/header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
+<?php $__env->startSection('content'); ?>
 <p>ログインIDとパスワードを入力してください。</p>
 <form method="POST" action="index.php?action=top">
     <div>
@@ -18,5 +17,5 @@
         <input type="submit" value="submit">
     </div>
 </form>
-</body>
-</html><?php /**PATH C:\xampp\htdocs\entry-repository\teishoku_order\view/login.blade.php ENDPATH**/ ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout/template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\entry-repository\teishoku_order\view/login.blade.php ENDPATH**/ ?>

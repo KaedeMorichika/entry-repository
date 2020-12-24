@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
-    <title>ログイン</title>
-</head>
-<body>
-<h1>ログインページ</h1>
+@extends('layout/template')
+
+@section('title', 'ログインページ')
+
+@include('layout/header')
+
+@section('content')
 <p>ログインIDとパスワードを入力してください。</p>
 <form method="POST" action="index.php?action=top">
     <div>
@@ -18,5 +17,4 @@
         <input type="submit" value="submit">
     </div>
 </form>
-</body>
-</html>
+@endsection

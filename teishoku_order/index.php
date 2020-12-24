@@ -18,7 +18,6 @@ if (empty($_SESSION)) {
     if (!empty($_POST['user_id']) && !empty($_POST['password'])) {
 
         $user = User::login($_POST['user_id'], $_POST['password']);
-        var_dump($user);
 
         if (!empty($user)) {
             $_SESSION['id'] = $user->getId();
