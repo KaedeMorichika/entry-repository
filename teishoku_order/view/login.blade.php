@@ -7,6 +7,16 @@
 <body>
 <h1>ログインページ</h1>
 <p>ログインIDとパスワードを入力してください。</p>
-
+<form method="POST" action="top">
+    <div>
+        <input type="text" name="user_id">
+    </div>
+    <div>
+        <input type="password" name="password">
+    </div>
+    <div>
+        <input type="submit" value="submit">
+    </div>
+</form>
 </body>
 </html>
