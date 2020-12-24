@@ -7,7 +7,7 @@
 <body>
 <h1>ログインページ</h1>
 <p>ログインIDとパスワードを入力してください。</p>
-<form method="POST" action="top">
+<form method="POST" action="index.php?action=top">
     <div>
         <input type="text" name="user_id">
     </div>
