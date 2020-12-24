@@ -1,5 +1,5 @@
 <?php
-namespace SingletonPDO;
+namespace auth;
 
 use http\Exception\RuntimeException;
 
