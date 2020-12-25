@@ -1,0 +1,10 @@
+{
+    "require": {
+        "duncan3dc/blade": "^4.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "auth\\": "class/auth"
+        }
+    }
+}

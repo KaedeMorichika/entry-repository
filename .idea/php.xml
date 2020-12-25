@@ -1,4 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/teishoku_order/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/teishoku_order/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/teishoku_order/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/teishoku_order/vendor/symfony/translation" />
+      <path value="$PROJECT_DIR$/teishoku_order/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/teishoku_order/vendor/voku/portable-ascii" />
+      <path value="$PROJECT_DIR$/teishoku_order/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/teishoku_order/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/teishoku_order/vendor/nesbot/carbon" />
+      <path value="$PROJECT_DIR$/teishoku_order/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/teishoku_order/vendor/duncan3dc/blade" />
+      <path value="$PROJECT_DIR$/teishoku_order/vendor/illuminate/container" />
+      <path value="$PROJECT_DIR$/teishoku_order/vendor/illuminate/contracts" />
+      <path value="$PROJECT_DIR$/teishoku_order/vendor/illuminate/events" />
+      <path value="$PROJECT_DIR$/teishoku_order/vendor/illuminate/filesystem" />
+      <path value="$PROJECT_DIR$/teishoku_order/vendor/illuminate/support" />
+      <path value="$PROJECT_DIR$/teishoku_order/vendor/composer" />
+      <path value="$PROJECT_DIR$/teishoku_order/vendor/illuminate/view" />
+    </include_path>
+  </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.4" />
 </project>

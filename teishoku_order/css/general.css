@@ -1,0 +1,43 @@
+body {
+    font-size: 20px;
+    background: #ffffff;
+}
+
+#header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    width: 100%;
+    height: 8rem;
+    background: #FFFFFF;
+    color: #ffffff;
+    border-bottom: double 2px #999999;
+}
+
+#product_title {
+    position: relative;
+    left: 5%;
+    bottom: -50%;
+    color: #FFAA00;
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 0 0 5px #000000 ;
+}
+
+.title {
+    position: relative;
+    bottom: 10%;
+    right: -75%;
+    font-size: 2rem;
+    color: #999999;
+    text-shadow: 0 0 3px #000000;
+}
+
+#content {
+    margin: 20px 40px;
+    height: 1000px;
+    padding: 50px 50px;
+    background: #FFDDAA;
+    border: solid #ccc;
+    border-radius: 10px;
+}
